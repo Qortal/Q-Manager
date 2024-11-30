@@ -215,8 +215,9 @@ const [fileSystem, setFileSystem] = useMemo(() => {
   };
 
   useEffect(() => {
+    if(!myAddress?.address) return
     const fetchFileSystem = async () => {
-      const data = await getFileSystemQManagerFromDB();
+      const data = await getFileSystemQManagerFromDB(myAddress?.address);
       if (data?.private && data?.public){
         setFileSystemPublic(data?.public)
         setFileSystemPrivate(data?.private)
@@ -229,13 +230,13 @@ const [fileSystem, setFileSystem] = useMemo(() => {
       }
     };
     fetchFileSystem();
-  }, []);
+  }, [myAddress?.address]);
 
   useEffect(() => {
-    if (fileSystemPublic && fileSystemPrivate) {
-      saveFileSystemQManagerToDB({public: fileSystemPublic, private: fileSystemPrivate, group: fileSystemGroup});
+    if (fileSystemPublic && fileSystemPrivate && myAddress?.address) {
+      saveFileSystemQManagerToDB({public: fileSystemPublic, private: fileSystemPrivate, group: fileSystemGroup}, myAddress?.address);
     }
-  }, [fileSystemPublic , fileSystemPrivate, fileSystemGroup]);
+  }, [fileSystemPublic , fileSystemPrivate, fileSystemGroup, myAddress?.address]);
 
   const addDirectoryToCurrent = (directoryName) => {
     if (!directoryName || currentPath.length === 0) return false;
