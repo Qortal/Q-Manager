@@ -282,6 +282,9 @@ moveNode, currentPath, item }) => {
             alignItems: 'center'
           }}>
             <button onClick={()=> {
+
+
+              if(!targetPath || targetPath?.length === 0) return
                 moveNode(
                     item.name,
                    item.type,
