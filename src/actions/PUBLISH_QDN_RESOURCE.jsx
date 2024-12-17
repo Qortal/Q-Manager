@@ -33,7 +33,7 @@ export const Label = styled("label")(
 
 export const PUBLISH_QDN_RESOURCE = ({ addNodeByPath, myName, mode, existingFile, updateByPath , groups, selectedGroup}) => {
   const [requestData, setRequestData] = useState({
-    service: existingFile?.service ||  "DOCUMENT"
+    service: existingFile?.service || mode === 'private' ? "DOCUMENT_PRIVATE" :  "DOCUMENT"
   });
 
   const { getRootProps, getInputProps } = useDropzone({
